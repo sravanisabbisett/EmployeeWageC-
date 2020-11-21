@@ -12,6 +12,8 @@ namespace EmployeeWage
         int FULL_TIME_EMP_HOURS = 8;
         int PART_TIME_EMP_HOURS = 4;
         int ABSENT_EMP_HOURS = 0;
+        int noOfWorkingdaysPerMonth = 20;
+        int totalSalary = 0;
       public int CheckEmployee()
         {
             Random random = new Random();
@@ -25,6 +27,15 @@ namespace EmployeeWage
                    employeeCheck == IS_PART_TIME ? DAILY_WAGE_PERHOUR * PART_TIME_EMP_HOURS :
                                      DAILY_WAGE_PERHOUR * ABSENT_EMP_HOURS;
         }
-
+        public int CalculateWagePerMonth()
+        {
+            int salary = CalculateWage();
+            for(int days = 1; days <= noOfWorkingdaysPerMonth; days++)
+            {
+                totalSalary += salary;
+            }
+            return totalSalary;
+        }
+        
     }
 }
