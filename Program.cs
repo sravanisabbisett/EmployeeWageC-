@@ -8,8 +8,8 @@ namespace EmployeeWage
         {
             Console.WriteLine("Welcome to employeeWage");
             EmployeeWage employeeWage = new EmployeeWage();
-            String result = employeeWage.Checkemployee();
-            Console.WriteLine(result);
+            int result = employeeWage.CalculateWage();
+            Console.WriteLine("Daily Wage:::"+result);
             Console.ReadKey();
         }
     }
