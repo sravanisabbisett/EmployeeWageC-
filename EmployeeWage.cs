@@ -14,27 +14,29 @@ namespace EmployeeWage
         int ABSENT_EMP_HOURS = 0;
         int noOfWorkingdaysPerMonth = 20;
         int totalSalary = 0;
+        int totalWorkDays = 0;
+        int totalempHours = 0;
+        int maximumHrsInMonth = 100;
       public int CheckEmployee()
         {
             Random random = new Random();
             int employeeCheck = random.Next(0, 3);
             return employeeCheck;
         }
-       public int CalculateWage()
+       public int GetEmpHrs()
         {
             int employeeCheck = CheckEmployee();
-            return employeeCheck == IS_FULL_TIME ? DAILY_WAGE_PERHOUR * FULL_TIME_EMP_HOURS :
-                   employeeCheck == IS_PART_TIME ? DAILY_WAGE_PERHOUR * PART_TIME_EMP_HOURS :
-                                     DAILY_WAGE_PERHOUR * ABSENT_EMP_HOURS;
+            return employeeCheck == IS_FULL_TIME ? FULL_TIME_EMP_HOURS :
+                   employeeCheck == IS_PART_TIME ? PART_TIME_EMP_HOURS : ABSENT_EMP_HOURS;
         }
         public int CalculateWagePerMonth()
         {
-            int salary = CalculateWage();
-            for(int days = 1; days <= noOfWorkingdaysPerMonth; days++)
+            while (totalWorkDays < noOfWorkingdaysPerMonth && totalempHours < maximumHrsInMonth)
             {
-                totalSalary += salary;
+                totalWorkDays++;
+                totalempHours +=GetEmpHrs();
             }
-            return totalSalary;
+            return totalSalary = DAILY_WAGE_PERHOUR * totalempHours;
         }
         
     }
