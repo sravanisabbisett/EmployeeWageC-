@@ -8,8 +8,8 @@ namespace EmployeeWage
         {
             Console.WriteLine("Welcome to employeeWage");
             EmployeeWage employeeWage = new EmployeeWage();
-            int result = employeeWage.CalculateWagePerMonth();
-            Console.WriteLine("Total salary per Month:::"+result);
+            employeeWage.CalculateWagePerMonth("infosys", 20, 20, 100);
+            employeeWage.CalculateWagePerMonth("wipro", 20, 25, 100);
             Console.ReadKey();
         }
     }
