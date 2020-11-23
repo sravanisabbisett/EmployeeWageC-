@@ -8,15 +8,27 @@ namespace EmployeeWage
     {
        public const int IS_FULL_TIME = 2;
        public const int IS_PART_TIME = 1;
-       public const int DAILY_WAGE_PERHOUR = 20;
        public const int FULL_TIME_EMP_HOURS = 8;
        public const int PART_TIME_EMP_HOURS = 4;
        public const int ABSENT_EMP_HOURS = 0;
-        int noOfWorkingdaysPerMonth = 20;
-        int totalSalary = 0;
-        int totalWorkDays = 0;
-        int totalempHours = 0;
-        int maximumHrsInMonth = 100;
+       int totalSalary = 0;
+       int totalWorkDays = 0;
+       int totalempHours = 0;
+        private string company;
+        private int employeeRatePerHour;
+        private int noOfWorkingDays;
+        private int maximumWorkingHrs;
+        private int totalempWage;
+
+        public EmployeeWage(string company,int employeeRatePerHour,int noOfWorkingDays,int maximumWorkingHrs)
+        {
+            this.company = company;
+            this.employeeRatePerHour = employeeRatePerHour;
+            this.noOfWorkingDays = noOfWorkingDays;
+            this.maximumWorkingHrs = maximumWorkingHrs;
+
+        }
+        
         /// <summary>
         /// generating random number 0,1,2
         /// </summary>
@@ -40,19 +52,28 @@ namespace EmployeeWage
         }
 
         /// <summary>
-        /// calculating the employeeWage per month
+        /// 
         /// </summary>
+        /// <param name="company"></param>
+        /// <param name="empRatePerHour"></param>
+        /// <param name="noOfWorkingDays"></param>
+        /// <param name="maximumHoursInMonth"></param>
         /// <returns></returns>
-        public int CalculateWagePerMonth(string company,int empRatePerHour,int noOfWorkingDays,int maximumHoursInMonth)
+        public int CalculateWagePerMonth()
         {
-            while (totalWorkDays < noOfWorkingDays && totalempHours < maximumHoursInMonth)
+            while (totalWorkDays < noOfWorkingDays && totalempHours < maximumWorkingHrs)
             {
                 totalWorkDays++;
                 totalempHours +=GetEmpHrs();
             }
-            totalSalary = empRatePerHour * totalempHours;
+            totalSalary = employeeRatePerHour * totalempHours;
             Console.WriteLine("Total empWage for a company" + company + "is:" +totalSalary);
             return totalSalary;
+        }
+
+        public string toString()
+        {
+            return "total emplyee wage for company" + this.company + "is :" + this.totalSalary;
         }
         
     }
