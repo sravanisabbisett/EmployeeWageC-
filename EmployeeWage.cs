@@ -14,20 +14,30 @@ namespace EmployeeWage
        int totalSalary = 0;
        int totalWorkDays = 0;
        int totalempHours = 0;
-        private string company;
-        private int employeeRatePerHour;
-        private int noOfWorkingDays;
-        private int maximumWorkingHrs;
-        private int totalempWage;
-
-        public EmployeeWage(string company,int employeeRatePerHour,int noOfWorkingDays,int maximumWorkingHrs)
+       private int noOfCompany = 0;
+       private CompanyEmpwage[] companyEmpWageArray;
+       
+        public EmployeeWage()
         {
-            this.company = company;
-            this.employeeRatePerHour = employeeRatePerHour;
-            this.noOfWorkingDays = noOfWorkingDays;
-            this.maximumWorkingHrs = maximumWorkingHrs;
-
+            this.companyEmpWageArray = new CompanyEmpwage[5];
         }
+
+        public void addCompanyEmpwage(string company,int empRatePerHour,int numOfWorkingDays,int maxHoursPerMonth)
+        {
+            companyEmpWageArray[this.noOfCompany] = new CompanyEmpwage(company, empRatePerHour, numOfWorkingDays, maxHoursPerMonth);
+            noOfCompany++;
+        }
+        
+        public void computeEmpwage()
+        {
+            for(int i = 0; i < noOfCompany; i++)
+            {
+                companyEmpWageArray[i].setTotalEmpWage(this.computeEmpwage(this.companyEmpWageArray[i]));
+                Console.WriteLine(this.companyEmpWageArray[i].toString());
+            }
+        }
+
+        
         
         /// <summary>
         /// generating random number 0,1,2
@@ -59,22 +69,17 @@ namespace EmployeeWage
         /// <param name="noOfWorkingDays"></param>
         /// <param name="maximumHoursInMonth"></param>
         /// <returns></returns>
-        public int CalculateWagePerMonth()
+        public int computeEmpwage(CompanyEmpwage companyEmpwage)
         {
-            while (totalWorkDays < noOfWorkingDays && totalempHours < maximumWorkingHrs)
+            while (totalWorkDays < companyEmpwage.numOfWorkingDays && totalempHours < companyEmpwage.maxHoursPerMonth)
             {
                 totalWorkDays++;
                 totalempHours +=GetEmpHrs();
+                Console.WriteLine("Day#:" + totalWorkDays + "Emp hrs" + GetEmpHrs());
             }
-            totalSalary = employeeRatePerHour * totalempHours;
-            Console.WriteLine("Total empWage for a company" + company + "is:" +totalSalary);
+            totalSalary = companyEmpwage.empRatePerHour * totalempHours;
             return totalSalary;
         }
 
-        public string toString()
-        {
-            return "total emplyee wage for company" + this.company + "is :" + this.totalSalary;
-        }
-        
     }
 }
