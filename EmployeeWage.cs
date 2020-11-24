@@ -14,26 +14,28 @@ namespace EmployeeWage
        int totalSalary = 0;
        int totalWorkDays = 0;
        int totalempHours = 0;
-       private int noOfCompany = 0;
-       private CompanyEmpwage[] companyEmpWageArray;
+       private LinkedList<CompanyEmpwage> companyEmpWageList;
+       private Dictionary<string, CompanyEmpwage> companyToEmpwageMap;   
        
         public EmployeeWage()
         {
-            this.companyEmpWageArray = new CompanyEmpwage[5];
+            this.companyEmpWageList = new LinkedList<CompanyEmpwage>();
+            this.companyToEmpwageMap = new Dictionary<string, CompanyEmpwage>();
         }
 
         public void addCompanyEmpwage(string company,int empRatePerHour,int numOfWorkingDays,int maxHoursPerMonth)
         {
-            companyEmpWageArray[this.noOfCompany] = new CompanyEmpwage(company, empRatePerHour, numOfWorkingDays, maxHoursPerMonth);
-            noOfCompany++;
+            CompanyEmpwage companyEmpwage = new CompanyEmpwage(company, empRatePerHour, numOfWorkingDays, maxHoursPerMonth);
+            this.companyEmpWageList.AddLast(companyEmpwage);
+            this.companyToEmpwageMap.Add(company, companyEmpwage);
         }
         
         public void computeEmpwage()
         {
-            for(int i = 0; i < noOfCompany; i++)
+            foreach(CompanyEmpwage companyEmpwage in this.companyEmpWageList)
             {
-                companyEmpWageArray[i].setTotalEmpWage(this.computeEmpwage(this.companyEmpWageArray[i]));
-                Console.WriteLine(this.companyEmpWageArray[i].toString());
+                companyEmpwage.setTotalEmpWage(this.computeEmpwage(companyEmpwage));
+                Console.WriteLine(companyEmpwage.toString());
             }
         }
 
@@ -80,6 +82,12 @@ namespace EmployeeWage
             totalSalary = companyEmpwage.empRatePerHour * totalempHours;
             return totalSalary;
         }
+
+        public int getTotalWage(string company)
+        {
+            return this.companyToEmpwageMap[company].totalEmpwage;
+        }
+
 
     }
 }
